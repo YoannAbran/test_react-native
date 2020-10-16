@@ -19,12 +19,12 @@ import {
 
   constructor(props){
     super(props);{
-
+      const { navigation ,route} = this.props
+if(navigation){
+  const { nomLog } = route.params;
+}
       this.state = {
-        nom_input: '',
-        password_input: '',
-        mail_input: '',
-        id_evenement_input: '',
+        nomLog : '',
         data:[]
       }
     }
@@ -48,21 +48,37 @@ import {
 
   };
 
+
   componentWillUnmount() {
   this._refreshData();
 }
   render(){
-    const { navigation } = this.props
+    const { navigation ,route} = this.props
 
+
+    const viewLog = () => {
+      if(navigation){
+        const { nomLog } = route.params;
+        return(<Text style = {{fontSize:30, textAlign:'center'}}>Welcome : {nomLog}</Text>)
+      }
+      else{
+        return(<Text style = {{fontSize:30, textAlign:'center'}}>Welcome </Text>)
+      }
+    }
   return(
     <ScrollView>
     <View>
+    <View>
+
+      {viewLog()}
+
+    </View>
     <FlatList
          data={this.state.data}
          keyExtractor={(item,index) => index.toString()}
 
          renderItem={({item}) =>
-{  commentList=()=>{ return item.commentaires.map(commentaires=>{
+{ commentList=()=>{ return item.commentaires.map(commentaires=>{
   return(
     <View key = {commentaires.id}>
           <Text >avis : {commentaires.avis}</Text>

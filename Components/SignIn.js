@@ -33,7 +33,7 @@ class SignIn extends React.Component {
         {
 
             //Then open Profile activity and send user email to profile activity.
-            this.props.navigation.navigate('List');
+            this.props.navigation.navigate('List',{nomLog:this.state.nom_input});
 
         }
         else{
