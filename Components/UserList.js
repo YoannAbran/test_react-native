@@ -19,12 +19,9 @@ import {
 
   constructor(props){
     super(props);{
-      const { navigation ,route} = this.props
-if(navigation){
-  const { nomLog } = route.params;
-}
+
       this.state = {
-        nomLog : '',
+
         data:[]
       }
     }
@@ -37,6 +34,9 @@ if(navigation){
     const test = await response.json()
     this.setState({data:test})
   };
+
+
+
 
 
   componentDidMount(){
@@ -53,24 +53,26 @@ if(navigation){
   this._refreshData();
 }
   render(){
-    const { navigation ,route} = this.props
 
+    const { navigation,route } = this.props
+      const {goBack} = this.props.navigation;
 
     const viewLog = () => {
-      if(navigation){
-        const { nomLog } = route.params;
-        return(<Text style = {{fontSize:30, textAlign:'center'}}>Welcome : {nomLog}</Text>)
+      if (route.params){
+        return <><Text>Welcome : {route.params.nomLog}</Text>
+        <Button title="Click here to Logout" onPress={ () => goBack(null) } /></>
       }
-      else{
-        return(<Text style = {{fontSize:30, textAlign:'center'}}>Welcome </Text>)
+      else {
+        return <Text>Welcome</Text>
       }
     }
   return(
-    <ScrollView>
-    <View>
+
     <View>
 
-      {viewLog()}
+    <View>
+
+    {viewLog()}
 
     </View>
     <FlatList
@@ -78,7 +80,7 @@ if(navigation){
          keyExtractor={(item,index) => index.toString()}
 
          renderItem={({item}) =>
-{ commentList=()=>{ return item.commentaires.map(commentaires=>{
+{ const commentList=()=>{ return item.commentaires.map(commentaires=>{
   return(
     <View key = {commentaires.id}>
           <Text >avis : {commentaires.avis}</Text>
@@ -116,7 +118,7 @@ return(
        />
        </View>
 
-    </ScrollView>
+
 
   )
 }

@@ -32,12 +32,11 @@ class SignIn extends React.Component {
           if(responseData.accessToken)
         {
 
-            //Then open Profile activity and send user email to profile activity.
             this.props.navigation.navigate('List',{nomLog:this.state.nom_input});
 
         }
         else{
-        Alert.alert(JSON.stringify(responseData)); // Alerts doesn't allow arrays or JSONs, so stringify them to view in Alerts
+        Alert.alert(JSON.stringify(responseData.message)); // Alerts doesn't allow arrays or JSONs, so stringify them to view in Alerts
     }
   }
   )
