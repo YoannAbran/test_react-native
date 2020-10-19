@@ -68,7 +68,7 @@ import {
     }
   return(
 
-    <View>
+    <ScrollView>
 
     <View>
 
@@ -116,7 +116,7 @@ return(
 
            </View>)}}
        />
-       </View>
+       </ScrollView>
 
 
 
