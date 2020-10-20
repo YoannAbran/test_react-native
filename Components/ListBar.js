@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationEvents } from 'react-navigation';
-import {getUser} from '../barApi'
+import {getBar} from '../barApi'
 import {
   SafeAreaView,
   StyleSheet,
@@ -15,32 +15,35 @@ import {
 } from 'react-native'
 
 
- class UserList extends React.Component {
+ class ListBar extends React.Component {
 
   constructor(props){
-    super(props);{
+    super(props)
 
       this.state = {
-        users:[]
+        bars:[]
       }
-    }
+
   };
 
-//affichage api test
-_getUsers(){
-  getUser().then(data =>{
-    this.setState({users: data})
+//affichage api bar
 
-  })
-}
+  _getBars(){
+    getBar().then(data =>{
+      this.setState({bars: data})
+    
+    })
+  }
+
+
 
 
   componentDidMount(){
     const { navigation } = this.props
     this._refreshData = navigation.addListener('focus', () => {
-      this._getUsers();
+      this._getBars();
     });
-    this._getUsers();
+    this._getBars();
 
   };
 
@@ -53,45 +56,30 @@ _getUsers(){
     const { navigation,route } = this.props
     const {goBack} = this.props.navigation;
 
-    const viewLog = () => {
-      if (route.params){
-        return <><Text>Welcome : {route.params.nomLog}</Text>
-        <Button title="Click here to Logout" onPress={ () => goBack(null) } /></>
-      }
-      else {
-        return <Text>Welcome</Text>
-      }
-    }
+
   return(
 
     <ScrollView>
 
-    <View>
-    {viewLog()}
-    </View>
 
     <FlatList
-         data={this.state.users}
-         keyExtractor={(item,index) => index.toString()}
+         data={this.state.bars}
+         keyExtractor={(item) => item.id.toString()}
          renderItem={({item}) =>
-      {
+          {
         return(
          <View style = {{margin : 2}}>
 
            <TouchableOpacity
            style={{ backgroundColor: 'yellow', borderWidth: 1 }}
            onPress={() => {
-             navigation.navigate('Edit', {
+             navigation.navigate('Detail', {
                itemId: item.id,
-               nom: item.nom,
-               mail : item.mail,
-               id_evenement : item.id_evenement,
-               password : item.password
              });
             }}>
            <Text>  nom : {item.nom}</Text></TouchableOpacity>
-           <Text>mail : {item.mail}</Text>
-          
+           <Text>mail : {item.adresse}</Text>
+           <Text>mail : {item.telephone}</Text>
            </View>
          )}}
        />
@@ -100,4 +88,4 @@ _getUsers(){
    }
  }
 
-export default UserList
+export default ListBar

@@ -45,40 +45,40 @@ class EditUser extends React.Component {
   render() {
     const { route , navigation} = this.props;
     const { itemId, nom, password, mail, id_evenement } = route.params;
-    console.log(id_evenement);
-    return (
-      <View >
-        <Text>{JSON.stringify(itemId)}</Text>
-        <TextInput
-        placeholder  = 'nom'
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        defaultValue = {nom}
-        onChangeText={nom => this.setState({nom_input: nom})}
-     />
-        <TextInput
-        placeholder= 'password'
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        defaultValue = {password}
-        onChangeText={text => this.setState({password_input: text})}
-     />
-        <TextInput
-        placeholder= 'mail'
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        defaultValue = {mail}
-        onChangeText={text => this.setState({mail_input: text})}
-     />
-        <TextInput
-        placeholder= 'id'
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-        defaultValue = {id_evenement.toString()}
-        onChangeText={text => this.setState({id_evenement_input: text})}
+      return (
+        <View >
+          <Text>{JSON.stringify(itemId)}</Text>
 
-     />
+          <TextInput
+          placeholder  = 'nom'
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          defaultValue = {nom}
+          onChangeText={nom => this.setState({nom_input: nom})}
+          />
 
+          <TextInput
+          placeholder= 'password'
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          defaultValue = {password}
+          onChangeText={text => this.setState({password_input: text})}
+          />
 
-     <Button title='submit' onPress={this.fetchPut}/>
+          <TextInput
+          placeholder= 'mail'
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          defaultValue = {mail}
+          onChangeText={text => this.setState({mail_input: text})}
+          />
 
-      </View>
+          <TextInput
+          placeholder= 'id'
+          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+          defaultValue = {id_evenement.toString()}
+          onChangeText={text => this.setState({id_evenement_input: text})}
+          />
+
+          <Button title='submit' onPress={this.fetchPut}/>
+        </View>
 
     )
   }

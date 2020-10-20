@@ -23,7 +23,6 @@ class SignUp extends React.Component {
         'Content-Type':'application/json'
       },
       body: JSON.stringify({
-
         nom: this.state.nom_input,
         password: this.state.password_input,
         mail: this.state.mail_input,
@@ -33,13 +32,10 @@ class SignUp extends React.Component {
         .then((responseData) =>{
           if(responseData.nom && responseData.password && responseData.mail && responseData.id_evenement)
         {
-
-            //Then open Profile activity and send user email to profile activity.
           Alert.alert('Utilisateur créer avec succés');
-
         }
         else{
-        Alert.alert(JSON.stringify(responseData)); // Alerts doesn't allow arrays or JSONs, so stringify them to view in Alerts
+          Alert.alert(JSON.stringify(responseData.message)); // Alerts doesn't allow arrays or JSONs, so stringify them to view in Alerts
       }
       }
       )

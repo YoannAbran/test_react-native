@@ -9,9 +9,9 @@ export default class App extends React.Component {
 
   render() {
     return (
-<NavigationContainer>
-      <Navigation/>
-  </NavigationContainer>
+      <NavigationContainer>
+        <Navigation/>
+      </NavigationContainer>
     )
   }
 
