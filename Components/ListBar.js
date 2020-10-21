@@ -31,7 +31,7 @@ import {
   _getBars(){
     getBar().then(data =>{
       this.setState({bars: data})
-    
+
     })
   }
 
@@ -74,7 +74,7 @@ import {
            style={{ backgroundColor: 'yellow', borderWidth: 1 }}
            onPress={() => {
              navigation.navigate('Detail', {
-               itemId: item.id,
+            id: item.id,
              });
             }}>
            <Text>  nom : {item.nom}</Text></TouchableOpacity>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationEvents } from 'react-navigation';
-import {getUser} from '../barApi'
+import {getUsers} from '../barApi'
 import {
   SafeAreaView,
   StyleSheet,
@@ -27,8 +27,8 @@ import {
   };
 
 //affichage api test
-_getUsers(){
-  getUser().then(data =>{
+_getAllUser(){
+  getUsers().then(data =>{
     this.setState({users: data})
 
   })
@@ -38,9 +38,9 @@ _getUsers(){
   componentDidMount(){
     const { navigation } = this.props
     this._refreshData = navigation.addListener('focus', () => {
-      this._getUsers();
+      this._getAllUser();
     });
-    this._getUsers();
+    this._getAllUser();
 
   };
 
@@ -89,9 +89,9 @@ _getUsers(){
                password : item.password
              });
             }}>
-           <Text>  nom : {item.nom}</Text></TouchableOpacity>
-           <Text>mail : {item.mail}</Text>
-          
+           <Text>  nom : {item.login}</Text></TouchableOpacity>
+           <Text>mail : {item.email}</Text>
+
            </View>
          )}}
        />

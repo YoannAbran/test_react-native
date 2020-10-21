@@ -8,6 +8,14 @@ export function getBar () {
       }}).then((response) => response.json())
       .catch((error) => console.error(error))
 }
+export function getUsers () {
+  return fetch(url + "/utilisateur",{
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }}).then((response) => response.json())
+      .catch((error) => console.error(error))
+}
 
 export function getSingleBar (id) {
   return fetch(url + '/bar/' + id,{
