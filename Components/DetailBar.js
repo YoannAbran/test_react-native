@@ -23,7 +23,6 @@ import {
     super(props);{
 
       this.state = {
-        bars:''
         bars:'',
         isLoading: false,
         mapLoading:false,
@@ -41,7 +40,7 @@ import {
       const { route , navigation} = this.props;
       const { id} = route.params;
       getSingleBar(id).then(data =>{
-        this.setState({bars: data})
+
         this.setState({bars: data, isLoading:false})
 
       })
@@ -57,8 +56,6 @@ import {
       this.setState({ isLoading: true });
     this._getBarDetail();
 
-
-
   };
 
 
@@ -66,13 +63,11 @@ import {
 //   this._refreshData();
 // }
 render(){
-  const bars = this.state.bars
+
   const {bars,isLoading,mapLoading} = this.state
   const lat = bars.latitude
   const long = bars.longitude
-  return(
-    <View tyle={styles.container}>
-      <Text>{bars.nom}</Text>
+  
 
 
   // let getCoord = () => {
@@ -108,34 +103,6 @@ if (mapLoading && <MapView></MapView>){
       <Text>latitude : {bars.latitude}</Text>
       <Text>longitude : {bars.longitude}</Text>
 
-
-
-       <MapView
-         provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-         style={styles.map}
-         zoomEnabled={true}
-          region={{
-            latitude: 46.9896,
-            longitude: 3.159,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}>
-          <MapView.Marker
-      coordinate={{
-        latitude:lat,
-        longitude:long,
-      }}
-      title={bars.nom}
-
-    />
-          >
-
-    </MapView>
-      <Text>latitude : {lat}</Text>
-      <Text>longitude : {long}</Text>
-
-
-
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
@@ -151,10 +118,6 @@ if (mapLoading && <MapView></MapView>){
                coordinate={{latitude: lat,longitude: long}}
                />
            </MapView>
-
-
-
-
     </View>
   )
 
