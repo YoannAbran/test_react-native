@@ -24,6 +24,10 @@ import {
 
       this.state = {
         bars:''
+        bars:'',
+        isLoading: false,
+        mapLoading:false,
+
       }
     }
   };
@@ -38,6 +42,7 @@ import {
       const { id} = route.params;
       getSingleBar(id).then(data =>{
         this.setState({bars: data})
+        this.setState({bars: data, isLoading:false})
 
       })
     };
@@ -49,7 +54,10 @@ import {
     // this._refreshData = navigation.addListener('focus', () => {
     //   this._getBarDetail();
     // });
+      this.setState({ isLoading: true });
     this._getBarDetail();
+
+
 
   };
 
@@ -59,11 +67,38 @@ import {
 // }
 render(){
   const bars = this.state.bars
+  const {bars,isLoading,mapLoading} = this.state
   const lat = bars.latitude
   const long = bars.longitude
   return(
     <View tyle={styles.container}>
       <Text>{bars.nom}</Text>
+
+
+  // let getCoord = () => {
+  //
+  //   if (lat !== undefined && long !== undefined){
+  //     return(
+  //
+  //          )
+  //         }
+  //       }
+
+if (isLoading && lat===undefined && long===undefined ){
+  return <Text>Loading</Text>
+  mapLoading = true
+
+
+
+console.log(lat);
+if (mapLoading && <MapView></MapView>){
+  return <Text>Loading</Text>
+}
+}
+  return (
+
+    <View style={styles.container}>
+      <Text>{bars.nom} </Text>
       <Text>telephone : {bars.telephone}</Text>
       <Text>{bars.reseau_sociaux}</Text>
       <Text>{bars.photo}</Text>
@@ -96,6 +131,28 @@ render(){
           >
 
     </MapView>
+      <Text>latitude : {lat}</Text>
+      <Text>longitude : {long}</Text>
+
+
+
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        style={styles.map}
+        zoomEnabled={true}
+         region={{
+           latitude: lat,
+           longitude: long,
+           latitudeDelta: 0.0922,
+           longitudeDelta: 0.0421,
+         }}>
+         {console.log("marker:"+lat)}
+             <Marker
+               coordinate={{latitude: lat,longitude: long}}
+               />
+           </MapView>
+
+
 
 
     </View>
