@@ -23,73 +23,82 @@ import {
     super(props);{
 
       this.state = {
-        bars:'',
+        bars:[],
         isLoading: false,
-        mapLoading:false,
-
+        markers: []
       }
     }
   };
 
-//affichage api bar
+  _getBarDetail(){
+    const { route , navigation} = this.props;
+    const { id} = route.params;
+    getSingleBar(id).then(data =>{
 
+      this.setState({bars: data, isLoading:false});
+      console.log(this.state.bars);
 
-
-
-    _getBarDetail(){
-      const { route , navigation} = this.props;
-      const { id} = route.params;
-      getSingleBar(id).then(data =>{
-
-        this.setState({bars: data, isLoading:false})
-
-      })
-    };
-
-
-
-  componentDidMount(){
-    // const { navigation } = this.props
-    // this._refreshData = navigation.addListener('focus', () => {
-    //   this._getBarDetail();
-    // });
-      this.setState({ isLoading: true });
-    this._getBarDetail();
-
+    })
   };
 
+  _barMarkers(id, lat, long, name) {
+    this.state.markers.push({
+      id: id,
+      title : name,
+      coordinates: {
+        latitude: lat,
+        longitude: long
+      }
+    });
+    this.setState({ markers: this.state.markers });
+    console.log('new coordinates', this.state.markers[0]);
+  }
 
-//   componentWillUnmount() {
-//   this._refreshData();
-// }
-render(){
+  getCoord() {
+    const {bars, isLoading} = this.state
+    const id = bars.id;
+    const lat = bars.latitude
+    const long = bars.longitude
+    const name = bars.nom
+    this._barMarkers(id, lat, long, name);
+  }
 
-  const {bars,isLoading,mapLoading} = this.state
-  const lat = bars.latitude
-  const long = bars.longitude
-  
+  mapMarkers() {
+    return this.state.markers.map(
+      (markers) =>
+      <Marker
+        key={markers.id}
+        coordinate={{
+          latitude: markers.coordinates.longitude,
+          longitude: markers.coordinates.latitude
+        }}
+        title={markers.title}
+      >
+      </Marker>
+    )
+  }
 
+  componentDidMount() {
+    this.setState({ isLoading: true });
+    this._getBarDetail();
+  };
 
-  // let getCoord = () => {
-  //
-  //   if (lat !== undefined && long !== undefined){
-  //     return(
-  //
-  //          )
-  //         }
-  //       }
+  componentDidUpdate(previousProps, previousState) {
+    if (this.state.bars.latitude != previousState.bars.latitude) {
 
-if (isLoading && lat===undefined && long===undefined ){
-  return <Text>Loading</Text>
-  mapLoading = true
+      this.getCoord();
 
+    }
+  }
 
+render() {
 
-console.log(lat);
-if (mapLoading && <MapView></MapView>){
-  return <Text>Loading</Text>
-}
-}
+  const {bars, isLoading, marker, markers} = this.state
+
+  if (isLoading ){
+    return <Text>Loading</Text>
+  }
+
   return (
 
     <View style={styles.container}>
@@ -107,17 +116,14 @@ if (mapLoading && <MapView></MapView>){
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         zoomEnabled={true}
-         region={{
-           latitude: lat,
-           longitude: long,
+        region={{
+           latitude: 46.9896,
+           longitude: 3.159,
            latitudeDelta: 0.0922,
            longitudeDelta: 0.0421,
          }}>
-         {console.log("marker:"+lat)}
-             <Marker
-               coordinate={{latitude: lat,longitude: long}}
-               />
-           </MapView>
+         {this.mapMarkers()}
+      </MapView>
     </View>
   )
 
@@ -128,14 +134,7 @@ const styles = StyleSheet.create({
   container : {
     flex : 1,
   },
- // containermap: {
- //   ...StyleSheet.absoluteFillObject,
- //   flex :1,
- //   height: 400,
- //   width: 400,
- //   justifyContent: 'flex-end',
- //   alignItems: 'baseline',
- // },
+
  map: {
    height: 350,
    top: 0,
