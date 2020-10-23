@@ -25,6 +25,7 @@ function UserNav() {
     </Stack.Navigator>
   );
 }
+
 function BarNav() {
 
   return (

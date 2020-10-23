@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationEvents } from 'react-navigation';
 import MapView, { Marker ,PROVIDER_GOOGLE } from "react-native-maps";
-import {getSingleBar} from '../barApi'
+import { getSingleBar } from '../barApi'
 import {
   SafeAreaView,
   StyleSheet,
@@ -13,7 +13,6 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
-
 } from 'react-native'
 
 
@@ -23,7 +22,7 @@ import {
     super(props);{
 
       this.state = {
-        bars:[],
+        bars: [],
         isLoading: false,
         markers: []
       }
@@ -31,9 +30,9 @@ import {
   };
 
   _getBarDetail(){
-    const { route , navigation} = this.props;
-    const { id} = route.params;
-    getSingleBar(id).then(data =>{
+    const { route , navigation } = this.props;
+    const { id } = route.params;
+    getSingleBar(id).then( data => {
 
       this.setState({bars: data, isLoading:false});
       console.log(this.state.bars);
@@ -93,7 +92,7 @@ import {
 
 render() {
 
-  const {bars, isLoading, marker, markers} = this.state
+  const {bars, isLoading, markers} = this.state
 
   if (isLoading ){
     return <Text>Loading</Text>
@@ -119,8 +118,8 @@ render() {
         region={{
            latitude: 46.9896,
            longitude: 3.159,
-           latitudeDelta: 0.0922,
-           longitudeDelta: 0.0421,
+           latitudeDelta: 0.0440,
+           longitudeDelta: 0.0442,
          }}>
          {this.mapMarkers()}
       </MapView>
@@ -136,7 +135,7 @@ const styles = StyleSheet.create({
   },
 
  map: {
-   height: 350,
+   height: 380,
    top: 0,
    left: 0,
    right: 0,

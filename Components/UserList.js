@@ -19,7 +19,6 @@ import {
 
   constructor(props){
     super(props);{
-
       this.state = {
         users:[]
       }
@@ -30,24 +29,26 @@ import {
 _getAllUser(){
   getUsers().then(data =>{
     this.setState({users: data})
-
   })
 }
 
 
-  componentDidMount(){
-    const { navigation } = this.props
-    this._refreshData = navigation.addListener('focus', () => {
+componentDidMount(){
+  const { navigation } = this.props
+
+  this._refreshData = navigation.addListener('focus', () => {
       this._getAllUser();
     });
+
     this._getAllUser();
 
   };
 
 
-  componentWillUnmount() {
+componentWillUnmount() {
   this._refreshData();
 }
+
   render(){
 
     const { navigation,route } = this.props
@@ -62,42 +63,41 @@ _getAllUser(){
         return <Text>Welcome</Text>
       }
     }
-  return(
+    return(
 
-    <ScrollView>
+      <ScrollView>
 
-    <View>
-    {viewLog()}
-    </View>
+      <View>
+        {viewLog()}
+      </View>
 
-    <FlatList
-         data={this.state.users}
-         keyExtractor={(item,index) => index.toString()}
-         renderItem={({item}) =>
-      {
-        return(
-         <View style = {{margin : 2}}>
+      <FlatList
+           data={this.state.users}
+           keyExtractor={(item,index) => index.toString()}
+           renderItem={({item}) => {
+            return(
+              <View style = {{margin : 2}}>
 
-           <TouchableOpacity
-           style={{ backgroundColor: 'yellow', borderWidth: 1 }}
-           onPress={() => {
-             navigation.navigate('Edit', {
-               itemId: item.id,
-               nom: item.nom,
-               mail : item.mail,
-               id_evenement : item.id_evenement,
-               password : item.password
-             });
-            }}>
-           <Text>  nom : {item.login}</Text></TouchableOpacity>
-           <Text>mail : {item.email}</Text>
-
-           </View>
-         )}}
-       />
-       </ScrollView>
-     )
+                <TouchableOpacity
+                 style={{ backgroundColor: 'yellow', borderWidth: 1 }}
+                 onPress={() => {
+                   navigation.navigate('Edit', {
+                     itemId: item.id,
+                     nom: item.nom,
+                     mail : item.mail,
+                     id_evenement : item.id_evenement,
+                     password : item.password
+                   });
+                  }}>
+                <Text>  nom : {item.login}</Text></TouchableOpacity>
+                <Text>mail : {item.email}</Text>
+              </View>
+          )}
+         }
+         />
+         </ScrollView>
+       )
+     }
    }
- }
 
 export default UserList
